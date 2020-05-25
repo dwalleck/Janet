@@ -6,6 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
+using Server.Services;
+using Server.Configuration;
+using Janet.Server.Services;
 
 namespace Janet.Server
 {
@@ -23,6 +26,12 @@ namespace Janet.Server
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddSingleton<TwitchChatService>();
+            services.AddHostedService<TwitchChatService>();
+
+            services.Configure<TwitchConfiguration>(Configuration.GetSection("Twitch"));
+            
+            services.AddSignalR();
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
@@ -52,6 +61,7 @@ namespace Janet.Server
             {
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
+                endpoints.MapHub<CommandHub>("/command");
                 endpoints.MapFallbackToFile("index.html");
             });
         }

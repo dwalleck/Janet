@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.0" />
+    <PackageReference Include="twitchlib" Version="3.1.1" />
   </ItemGroup>
 
   <ItemGroup>
