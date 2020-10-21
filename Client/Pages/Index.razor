@@ -6,10 +6,10 @@
 
 Welcome to your new app.
 
-<p>@Animation</p>
+<p>@Message</p>
 
 @code {
-    public string Animation { get; set; }
+    public string Message = "testing";
 
     private HubConnection connection;
 
@@ -20,10 +20,10 @@ Welcome to your new app.
             .WithUrl(NavigationManager.ToAbsoluteUri("/command"))
             .Build();
 
-        connection.On<string>("Play", arg =>
+        connection.On<string>("TestMessage", message =>
         {
-            Console.WriteLine($"Animation played: {arg}");
-            Animation = arg;
+            Console.WriteLine($"Animation played: {message}");
+            Message = message;
             StateHasChanged();
         });
 

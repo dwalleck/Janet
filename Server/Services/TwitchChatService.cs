@@ -19,16 +19,19 @@ namespace Server.Services
         private TwitchConfiguration _twitchConfig;
         private readonly TwitchClient _client;
         private readonly IServiceProvider _services;
+        private readonly ChatBot _bot;
 
-        public TwitchChatService(IOptionsMonitor<TwitchConfiguration> options, IServiceProvider services)
+        public TwitchChatService(IOptionsMonitor<TwitchConfiguration> options, IServiceProvider services, ChatBot bot)
         {
             _services = services;
+            _bot = bot;
             _twitchConfig = options.CurrentValue;
             options.OnChange(config =>
             {
                 _twitchConfig = config;
             });
             _client = new TwitchClient();
+            _client.Connect();
             _client.OnChatCommandReceived += _client_OnChatCommandReceived;
         }
 
